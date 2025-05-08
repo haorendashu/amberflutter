@@ -71,8 +71,18 @@ class AmberflutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Plugi
       val id = paramsMap[intentExtraKeyId] as? String ?: ""
       val uriData = paramsMap[intentExtraKeyUriData] as? String ?: ""
       val permissions = paramsMap[intentExtraKeyPermissions] as? String ?: ""
+      val packageName = (paramsMap[intentExtraKeyPackage] as? String)?.let { originalPackage ->
+        if (originalPackage.isNotEmpty()) {
+            originalPackage
+        } else if (requestType != "get_public_key") {
+            amberPackageName
+        } else {
+            ""
+        }
+    } ?: if (requestType != "get_public_key") amberPackageName else ""
 
      val data = getDataFromContentResolver(
+       packageName,
        requestType.uppercase(),
        arrayOf(uriData, pubKey, currentUser),
        _context.contentResolver,
@@ -88,7 +98,11 @@ class AmberflutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Plugi
         Uri.parse(
           "$nostrsignerUri:$uriData"
         )
-      )
+      ).apply {
+        if (!packageName.isNullOrEmpty()) {
+          setPackage(packageName)
+        }
+      }
 
       intent.putExtra(intentExtraKeyType, requestType)
       intent.putExtra(intentExtraKeyCurrentUser, currentUser)
@@ -136,6 +150,10 @@ class AmberflutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Plugi
           val event = intent.getStringExtra(intentExtraKeyEvent)
           dataMap[intentExtraKeyEvent] = event
         }
+        if (intent.hasExtra(intentExtraKeyPackage)) {
+          val packageName = intent.getStringExtra(intentExtraKeyPackage)
+          dataMap[intentExtraKeyPackage] = packageName
+        }
 
         _result.success(dataMap)
 
@@ -172,13 +190,14 @@ class AmberflutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Plugi
     Code taken from: https://github.com/0xchat-app/nostr-dart/blob/main/android/src/main/kotlin/com/oxchat/nostrcore/ChatcorePlugin.kt
    */
   private fun getDataFromContentResolver(
+    packageName: String,
     type: String,
     uriData: Array<out String>,
     resolver: ContentResolver,
   ): HashMap<String, String?>? {
     try {
       resolver.query(
-        Uri.parse("content://${amberPackageName}.$type"),
+        Uri.parse("content://${packageName}.$type"),
         uriData,
         null,
         null,

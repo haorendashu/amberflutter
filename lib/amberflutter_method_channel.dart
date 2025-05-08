@@ -55,15 +55,14 @@ class MethodChannelAmberflutter extends AmberflutterPlatform {
 
   @override
   Future<Map<dynamic, dynamic>> signEvent(
-    String currentUser,
-    String eventJson,
-    String? id,
-  ) async {
+      String currentUser, String eventJson, String? id,
+      {String package = ""}) async {
     final arguments = {
       "type": "sign_event",
       "current_user": currentUser,
       "uri_data": eventJson,
       "id": id,
+      "package": package,
     };
 
     final data = await methodChannel.invokeMethod<Map<dynamic, dynamic>>(
@@ -76,17 +75,15 @@ class MethodChannelAmberflutter extends AmberflutterPlatform {
 
   @override
   Future<Map<dynamic, dynamic>> nip04Encrypt(
-    String plaintext,
-    String currentUser,
-    String pubKey,
-    String? id,
-  ) async {
+      String plaintext, String currentUser, String pubKey, String? id,
+      {String package = ""}) async {
     final arguments = {
       "type": "nip04_encrypt",
       "uri_data": plaintext,
       "current_user": currentUser,
       "pubKey": pubKey,
       "id": id,
+      "package": package,
     };
 
     final data = await methodChannel.invokeMethod<Map<dynamic, dynamic>>(
@@ -99,17 +96,15 @@ class MethodChannelAmberflutter extends AmberflutterPlatform {
 
   @override
   Future<Map<dynamic, dynamic>> nip04Decrypt(
-    String ciphertext,
-    String currentUser,
-    String pubKey,
-    String? id,
-  ) async {
+      String ciphertext, String currentUser, String pubKey, String? id,
+      {String package = ""}) async {
     final arguments = {
       "type": "nip04_decrypt",
       "uri_data": ciphertext,
       "current_user": currentUser,
       "pubKey": pubKey,
       "id": id,
+      "package": package,
     };
 
     final data = await methodChannel.invokeMethod<Map<dynamic, dynamic>>(
@@ -122,17 +117,15 @@ class MethodChannelAmberflutter extends AmberflutterPlatform {
 
   @override
   Future<Map<dynamic, dynamic>> nip44Encrypt(
-    String plaintext,
-    String currentUser,
-    String pubKey,
-    String? id,
-  ) async {
+      String plaintext, String currentUser, String pubKey, String? id,
+      {String package = ""}) async {
     final arguments = {
       "type": "nip44_encrypt",
       "uri_data": plaintext,
       "current_user": currentUser,
       "pubKey": pubKey,
       "id": id,
+      "package": package,
     };
 
     final data = await methodChannel.invokeMethod<Map<dynamic, dynamic>>(
@@ -145,17 +138,15 @@ class MethodChannelAmberflutter extends AmberflutterPlatform {
 
   @override
   Future<Map<dynamic, dynamic>> nip44Decrypt(
-    String ciphertext,
-    String currentUser,
-    String pubKey,
-    String? id,
-  ) async {
+      String ciphertext, String currentUser, String pubKey, String? id,
+      {String package = ""}) async {
     final arguments = {
       "type": "nip44_decrypt",
       "uri_data": ciphertext,
       "current_user": currentUser,
       "pubKey": pubKey,
       "id": id,
+      "package": package,
     };
 
     final data = await methodChannel.invokeMethod<Map<dynamic, dynamic>>(
@@ -168,15 +159,14 @@ class MethodChannelAmberflutter extends AmberflutterPlatform {
 
   @override
   Future<Map<dynamic, dynamic>> decryptZapEvent(
-    String eventJson,
-    String currentUser,
-    String? id,
-  ) async {
+      String eventJson, String currentUser, String? id,
+      {String package = ""}) async {
     final arguments = {
       "type": "decrypt_zap_event",
       "uri_data": eventJson,
       "current_user": currentUser,
       "id": id,
+      "package": package,
     };
 
     final data = await methodChannel.invokeMethod<Map<dynamic, dynamic>>(

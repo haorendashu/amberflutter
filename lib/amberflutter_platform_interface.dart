@@ -37,54 +37,38 @@ abstract class AmberflutterPlatform extends PlatformInterface {
   }
 
   Future<Map<dynamic, dynamic>> signEvent(
-    String currentUser,
-    String eventJson,
-    String? id,
-  ) {
+      String currentUser, String eventJson, String? id,
+      {String package = ""}) {
     throw UnimplementedError('signEvent() has not been implemented.');
   }
 
   Future<Map<dynamic, dynamic>> nip04Encrypt(
-    String plaintext,
-    String currentUser,
-    String pubKey,
-    String? id,
-  ) {
+      String plaintext, String currentUser, String pubKey, String? id,
+      {String package = ""}) {
     throw UnimplementedError('nip04Encrypt() has not been implemented.');
   }
 
   Future<Map<dynamic, dynamic>> nip04Decrypt(
-    String ciphertext,
-    String currentUser,
-    String pubKey,
-    String? id,
-  ) {
+      String ciphertext, String currentUser, String pubKey, String? id,
+      {String package = ""}) {
     throw UnimplementedError('nip04Decrypt() has not been implemented.');
   }
 
   Future<Map<dynamic, dynamic>> nip44Encrypt(
-    String plaintext,
-    String currentUser,
-    String pubKey,
-    String? id,
-  ) {
+      String plaintext, String currentUser, String pubKey, String? id,
+      {String package = ""}) {
     throw UnimplementedError('nip44Encrypt() has not been implemented.');
   }
 
   Future<Map<dynamic, dynamic>> nip44Decrypt(
-    String ciphertext,
-    String currentUser,
-    String pubKey,
-    String? id,
-  ) {
+      String ciphertext, String currentUser, String pubKey, String? id,
+      {String package = ""}) {
     throw UnimplementedError('nip44Decrypt() has not been implemented.');
   }
 
   Future<Map<dynamic, dynamic>> decryptZapEvent(
-    String eventJson,
-    String currentUser,
-    String? id,
-  ) {
+      String eventJson, String currentUser, String? id,
+      {String package = ""}) {
     throw UnimplementedError('decryptZapEvent() has not been implemented.');
   }
 }
