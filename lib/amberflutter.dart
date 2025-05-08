@@ -16,6 +16,10 @@ class Amberflutter {
     return AmberflutterPlatform.instance.isAppInstalled();
   }
 
+  Future<bool> isAndroidSignerInstalled() {
+    return AmberflutterPlatform.instance.isAndroidSignerInstalled();
+  }
+
   Future<Map<dynamic, dynamic>> signEvent({
     required String currentUser,
     required String eventJson,

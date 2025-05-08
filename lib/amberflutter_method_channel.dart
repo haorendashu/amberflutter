@@ -11,14 +11,23 @@ class MethodChannelAmberflutter extends AmberflutterPlatform {
   final methodChannel =
       const MethodChannel('com.sebdeveloper6952.amberflutter');
 
-
   @override
   Future<bool> isAppInstalled() async {
     final data = await methodChannel.invokeMethod<bool>(
       'isAppInstalled',
       {
-      'packageName': 'com.greenart7c3.nostrsigner',
+        'packageName': 'com.greenart7c3.nostrsigner',
       },
+    );
+
+    return data ?? false;
+  }
+
+  @override
+  Future<bool> isAndroidSignerInstalled() async {
+    final data = await methodChannel.invokeMethod<bool>(
+      'isAndroidSignerInstalled',
+      {},
     );
 
     return data ?? false;

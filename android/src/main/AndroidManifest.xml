@@ -2,5 +2,6 @@
   package="com.sebdeveloper6952.amberflutter.amberflutter">
   <queries>
     <package android:name="com.greenart7c3.nostrsigner"/>
+    <package android:name="com.github.haorendashu.nowser"/>
   </queries>
 </manifest>

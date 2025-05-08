@@ -41,6 +41,16 @@ class AmberflutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Plugi
     return context.packageManager.getInstalledApplications(0).find { info -> info.packageName == target } != null
   }
 
+  fun isAndroidSignerInstalled(context: Context): Boolean {
+    val intent =
+      Intent().apply {
+        action = Intent.ACTION_VIEW
+        data = Uri.parse("nostrsigner:")
+      }
+    val infos = context.packageManager.queryIntentActivities(intent, 0)
+    return infos.size > 0
+  }
+
   override fun onMethodCall(call: MethodCall, result: Result) {
     if (call.method == nostrsignerUri) {
       _result = MethodResultWrapper(result)
@@ -102,6 +112,9 @@ class AmberflutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Plugi
         var packageName: String? = paramsMap["packageName"] as? String ?: return
         val isInstalled: Boolean = isPackageInstalled(_context, packageName!!)
         result.success(isInstalled);
+    } else if (call.method == "isAndroidSignerInstalled") {
+      val isInstalled: Boolean = isAndroidSignerInstalled(_context)
+      result.success(isInstalled);
     } else {
       result.notImplemented()
     }
