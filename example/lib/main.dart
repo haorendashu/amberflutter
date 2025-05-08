@@ -31,6 +31,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final amber = Amberflutter();
+  String _package = '';
   String _npub = '';
   String _pubkeyHex = '';
   String _text = '';
@@ -50,6 +51,16 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             FilledButton(
               onPressed: () {
+                amber.isAndroidSignerInstalled().then((value) {
+                  setState(() {
+                    _text = 'isAndroidSignerInstalled? $value';
+                  });
+                });
+              },
+              child: const Text('IsAndroidSignerInstall ?'),
+            ),
+            FilledButton(
+              onPressed: () {
                 amber.getPublicKey(
                   permissions: [
                     const Permission(
@@ -60,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ).then((value) {
+                  _package = value['package'] ?? '';
                   _npub = value['signature'] ?? '';
                   _pubkeyHex = Nip19.decodePubkey(_npub);
                   setState(() {
@@ -86,6 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     .signEvent(
                   currentUser: _npub,
                   eventJson: eventJson,
+                  package: _package,
                 )
                     .then((value) {
                   setState(() {
@@ -102,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   plaintext: "Hello from Amber Flutter, Nip 04!",
                   currentUser: _npub,
                   pubKey: _pubkeyHex,
+                  package: _package,
                 )
                     .then((value) {
                   _cipherText = value['signature'] ?? '';
@@ -119,6 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ciphertext: _cipherText,
                   currentUser: _npub,
                   pubKey: _pubkeyHex,
+                  package: _package,
                 )
                     .then((value) {
                   setState(() {
@@ -135,6 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   plaintext: "Hello from Amber Flutter, Nip 44!",
                   currentUser: _npub,
                   pubKey: _pubkeyHex,
+                  package: _package,
                 )
                     .then((value) {
                   _cipherText = value['signature'] ?? '';
@@ -152,6 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ciphertext: _cipherText,
                   currentUser: _npub,
                   pubKey: _pubkeyHex,
+                  package: _package,
                 )
                     .then((value) {
                   setState(() {
