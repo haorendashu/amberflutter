@@ -35,6 +35,8 @@ _Get Public Key_
 
 Get the current user public key (npub). This request also allows to send permissions so the user can approve them forever. See the [Amber Docs](https://github.com/greenart7c3/Amber/blob/master/README.md) for the list of available permissions.
 
+The ```Get Public Key``` function, like a connect function, can set permissions and get the package name of android signer. You should call it first when you use android signer.
+
 ```
 final amber = Amberflutter();
 
@@ -45,6 +47,7 @@ amber.getPublicKey(
     ),
   ],
 ).then((value) {
+  print("package: ${value['package']}");
   print("npub: ${value['signature']}");
 });
 ```
@@ -67,6 +70,7 @@ final eventJson = jsonEncode({
 amber.signEvent(
   currentUser: "<your_npub_here>",
   eventJson: eventJson,
+  package: "<android_signer's_package_name(optional)>",
 ).then((value) {
   print("signed event: ${value['event']}");
 });
@@ -81,6 +85,7 @@ amber.nip04Encrypt(
   plaintext: "Hello from Amber Flutter, Nip 04!",
   currentUser: "<your_npub_here>",
   pubKey: "<hex_pubkey_to_encrypt>",
+  package: "<android_signer's_package_name(optional)>",
 ).then((value) {
   print("ciphertext: ${value['signature']}")
 });
@@ -93,6 +98,7 @@ amber.nip44Encrypt(
   plaintext: "Hello from Amber Flutter, Nip 44!",
   currentUser: "<your_npub_here>",
   pubKey: "<hex_pubkey_to_encrypt>",
+  package: "<android_signer's_package_name(optional)>",
 ).then((value) {
   print("ciphertext: ${value['signature']}")
 });
@@ -107,6 +113,7 @@ amber.nip04Decrypt(
   ciphertext: "<message_encrypted_with_nip04_here>",
   currentUser: "<your_npub_here>",
   pubKey: "<hex_pubkey_to_decrypt>",
+  package: "<android_signer's_package_name(optional)>",
 ).then((value) {
   print("plaintext: ${value['signature']}")
 });
@@ -121,6 +128,7 @@ amber.nip44Decrypt(
   ciphertext: "<message_encrypted_with_nip44_here>",
   currentUser: "<your_npub_here>",
   pubKey: "<hex_pubkey_to_decrypt>",
+  package: "<android_signer's_package_name(optional)>",
 ).then((value) {
   print("plaintext: ${value['signature']}")
 });
